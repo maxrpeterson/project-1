@@ -37,9 +37,16 @@ div, #total-box li {
 	border: 1px solid black;
 	border-radius: 0.6em;
 	line-height: 100%;
+	cursor: pointer;
+}
+#menu .item:active {
+	background-color: #c0c0c0;
 }
 #menu .item p {
 	margin: 0.7em;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	user-select: none;
 }
 h1, h2 {
 	margin: 0.4em;
@@ -51,16 +58,19 @@ h1, h2 {
 	text-align: left;
 	border: 1px solid black;
 }
+#tab > div:first-child {
+	height: 455px;
+	overflow: auto;
+}
 ul {
-	margin: 10px 0;
+	margin: 0;
 	padding: 0;
 	list-style: none;
 }
 #tab li {
 	border-bottom: 1px dashed black;
-	padding-left: 0.4em;
-	padding-bottom: 0.2em;
-	margin-top: 0.2em;
+	padding: 0.3em 0 0.3em 0.4em;
+	margin: 0.4em 0;
 }
 #total-box {
 	position: absolute;
