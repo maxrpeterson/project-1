@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>MaxCo POS</title>
+	<link rel="stylesheet" type="text/css" href="style.css">
+	<script type="text/javascript" src="../../../jQuery/2.x/jquery-2.1.4.js"></script>
+</head>
+<body>
+	<header>
+		<div><h1>MaxCo<sup><small>&copy;</small></sup> Point of Sale System</h1></div>
+	</header>
+	<div class="container">
+		<section id="menu">
+			<h2>Menu</h2>
+			<div class="row">
+				<div class="item col1">
+					<p class="item-name">Steak</p>
+					<p class="price">$398.00</p>
+				</div>
+				<div class="item col2">
+					<p class="item-name">Potatoes</p>
+					<p class="price">$6.50</p>
+				</div>
+			</div>
+			<div class="row">
+				<div class="item col1">
+					<p class="item-name">Ham &amp; Cheese Sandwich</p>
+					<p class="price">$6.00</p>
+				</div>
+				<div class="item col2">
+					<p class="item-name">House Salad</p>
+					<p class="price">$5.00</p>
+				</div>
+			</div>
+		</section>
+		<section id="tab">
+			<ul>
+				<li>Steak <span class="price">$398.00</span></li>
+			</ul>
+
+			<div id="total-box">
+				<div>Subtotal: <span class="price" id="subtotal">$398.00</span></div>
+				<div>Tax: <span class="price" id="tax">$35.32</span></div>
+				<div>Total: <span class="price" id="total">$433.32</span></div>
+			</div>
+		</section>
+	</div>
+	<script type="text/javascript" src="script.js"></script>
+</body>
+</html>
