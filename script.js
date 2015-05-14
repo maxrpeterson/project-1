@@ -11,20 +11,6 @@ function Item(item) {
 		this.price = parseFloat(item.querySelector(".price").textContent);
 	}
 };
-/*
-Item.prototype.addToTab = function() {
-	tab.items.push(this);
-	var tabItem = document.createElement("li");
-	tabItem.textContent = this.name + " ";
-	var tabItemPrice = document.createElement("span");
-	tabItemPrice.classList.add("price");
-	tabItemPrice.textContent = "$" + this.price.toFixed(2);
-	tabItem.appendChild(tabItemPrice);
-	tabField.appendChild(tabItem);
-	tab.calcTotal();
-};
-*/
-
 
 
 function Menu(itemElems) {
@@ -65,15 +51,16 @@ var addToTab = function(event) {
 	event.preventDefault();
 	tab.items.push(new Item(event.currentTarget));
 	var tabItem = document.createElement("li");
-	tabItem.textContent = event.currentTarget.querySelector(".item-name").textContent + " ";
+	tabItem.textContent = event.currentTarget.querySelector(".item-name").textContent;
 	var tabItemPrice = document.createElement("span");
 	tabItemPrice.classList.add("price");
 	tabItemPrice.textContent = event.currentTarget.querySelector(".price").textContent;
 	tabItem.appendChild(tabItemPrice);
 	tabField.appendChild(tabItem);
 	tab.calcTotal();
-	document.querySelector("#tab").scrollTop = 9999999999;
+	document.querySelector("#tab div").scrollTop = 9999999999;
 };
+
 for (var i = 0; i < menu.items.length; i++) {
 	menu.items[i].addEventListener("click", addToTab);
 }

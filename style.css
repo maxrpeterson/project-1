@@ -8,11 +8,10 @@ body {
 }
 .container {
 	max-width: 1200px;
-	height: 550px;
 	margin: 0 auto;
 }
-section {
-	height: 100%;
+section:first-child, section:nth-child(2) {
+	height: 550px;
 }
 div, #total-box li {
 	position: relative;
@@ -89,4 +88,10 @@ ul {
 }
 #total-box div:last-child {
 	border-top: 1px dashed black;
+}
+#history {
+	clear: both;
+}
+details {
+	display: none;
 }
