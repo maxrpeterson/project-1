@@ -7,7 +7,14 @@ var tabField = document.querySelector("#tab ul")
 function Menu(items) {
 	this.items = [];
 	for (var i = 0; i < items.length; i++) {
-		this.items.push(new MenuItem(items[i]));
+		var htmlPrice = items[i].querySelector(".price").textContent;
+		if (htmlPrice.charAt(0) === "$") {
+				items[i].price = parseFloat(htmlPrice.slice(1));
+		} else if (typeof parseFloat(htmlPrice) === "number") {
+				items[i].price = parseFloat(htmlPrice);
+		}
+		this.items.push(items[i]);
+		// this.items.push(new MenuItem(items[i]));
 	}
 	this.currentTab;
 	this.orders = [];
@@ -17,25 +24,19 @@ Menu.prototype.createTab = function() {
 	this.currentTab = this.orders[(this.orders.length - 1)];
 };
 Menu.prototype.addToTab = function(item) {
-	this.currentTab.addItem(this.items[(this.items.indexOf(item))]);
+	// this.currentTab.addItem(this.items[(this.items.indexOf(item))]);
+	this.currentTab.addItem(item);
 };
 
-function MenuItem(item) {
-	this.html = item;
-	var htmlPrice = item.querySelector(".price").textContent;
-	if (htmlPrice.charAt(0) === "$") {
-			this.price = parseFloat(htmlPrice.slice(1));
-	} else if (typeof parseFloat(htmlPrice) === "number") {
-			this.price = parseFloat(htmlPrice);
-	}
-};
 var menu = new Menu(document.querySelectorAll("#menu .item"));
+
 for (var i = 0; i < menu.items.length; i++) {
-	menu.items[i].html.addEventListener("click", function(event) {
-		event.currentTarget.addToTab();
+	menu.items[i].addEventListener("click", function(event) {
+		menu.addToTab(event.currentTarget);
 	});
 };
 
+menu.createTab();
 
 
 
@@ -57,7 +58,8 @@ Tab.prototype.calcTotal = function() {
 	totalField.textContent = this.total.toFixed(2);
 };
 Tab.prototype.addItem = function(item) {
-	this.items.push(new TabItem(item));
+	var tabItemIndex = this.items.length;
+	this.items.push(new TabItem(item,tabItemIndex));
 	this.render();
 };
 Tab.prototype.render = function() {
@@ -67,9 +69,26 @@ Tab.prototype.render = function() {
 		}
 	}
 	this.calcTotal();
-}
+};
+Tab.prototype.removeItem = function(item) {
+	var itemHtml = item;
+	this.items.splice(itemHtml.tabItemIndex,1);
+	itemHtml.parentNode.removeChild(itemHtml);
+	for (var i = 0; i < this.items.length; i++) {
+		this.items[i].html.tabItemIndex = i;
+	}
+	this.render();
+};
 
-function TabItem(item) {
+function TabItem(item, tabItemIndex) {
 	this.price = item.price;
-	this.html = item.html.cloneNode(true);
+	this.html = item.cloneNode(true);
+	this.html.tabItemIndex = tabItemIndex;
+	this.html.querySelector(".price").textContent = "";
+	this.html.querySelector(".price").insertAdjacentHTML("afterbegin","$<input type='text' value=" + this.price.toFixed(2) + ">");
+	this.html.addEventListener("click", function(event) {
+		if (event.target.nodeName !== "INPUT") {
+			menu.currentTab.removeItem(this);
+		} // else if (event.target.nodeName === "P")
+	});
 };

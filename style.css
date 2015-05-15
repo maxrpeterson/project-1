@@ -34,14 +34,16 @@ div, #tab div {
 	border: 1px solid black;
 	border-radius: 0.2em;
 	line-height: 100%;
-	cursor: pointer;
 	background: linear-gradient(#efefef,#e5e5e5);
 	box-shadow: 0 0 3px #cecece inset;
 }
-#menu .item:active {
+.item {
+	cursor: pointer;
+}
+.item:active, #menu .item:active {
 	background: #c0c0c0;
 }
-#menu .item:hover {
+.item:hover, #menu .item:hover {
 	box-shadow: 0 0 8px #8a8a8a;
 }
 #menu .item p {
@@ -61,6 +63,7 @@ h1, h2 {
 }
 #tab > div:first-child {
 	height: 455px;
+	padding: 0.5em 0 0 0;
 	overflow: auto;
 	box-shadow: 0 0 6px #aaaaaa inset;
 }
@@ -69,16 +72,13 @@ ul {
 	padding: 0;
 	list-style: none;
 }
-#tab ul div:first-child {
-	margin-top: 0.5em;
-}
 #tab ul div {
 	display: block;
 	border-bottom: 1px dashed black;
-	padding: 0.3em 0;
-	margin: 0 0 0.4em 0;
+	padding: 0.4em 0;
 	position: relative;
 	width: 100%;
+	margin: 0;
 }
 #tab p {
 	margin: 0 0.5em;
@@ -101,6 +101,12 @@ ul {
 }
 #total-box div:last-child {
 	border-top: 1px dashed black;
+}
+#checkout {
+	margin: 0.5em auto;
+	width: 100%;
+	padding: 0.4em 0;
+	display: block;
 }
 #history {
 	clear: both;
