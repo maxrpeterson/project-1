@@ -13,7 +13,7 @@ body {
 	margin: 0 auto;
 }
 section:first-child, section:nth-child(2) {
-	height: 550px;
+	min-height: 550px;
 	margin-bottom: 1.5em;
 }
 div {
@@ -66,7 +66,8 @@ section#tab {
 	padding: 0.5em 0 0 0;
 	overflow: auto;
 	box-shadow: 0 0 6px #aaaaaa inset;
-	height: 73%;
+	height: 390px;
+	border-bottom: 1px solid black;
 }
 ul {
 	margin: 0;
@@ -89,7 +90,6 @@ div#total-box {
 	position: absolute;
 	bottom: 0;
 	width: 100%;
-	border-top: 1px solid black;
 	margin-bottom: 0.2em;
 }
 #total-box div {
