@@ -16,7 +16,7 @@ section:first-child, section:nth-child(2) {
 	height: 550px;
 	margin-bottom: 1.5em;
 }
-div, #tab div {
+div {
 	position: relative;
 }
 #menu {
@@ -55,17 +55,18 @@ div, #tab div {
 h1, h2 {
 	margin: 0.4em;
 }
-#tab {
+section#tab {
 	width: 25%;
 	float: right;
 	text-align: left;
+	position: relative;
 	border: 1px solid black;
 }
 #tab > div:first-child {
-	height: 455px;
 	padding: 0.5em 0 0 0;
 	overflow: auto;
 	box-shadow: 0 0 6px #aaaaaa inset;
+	height: 73%;
 }
 ul {
 	margin: 0;
@@ -84,13 +85,14 @@ ul {
 	margin: 0 0.5em;
 	display: inline-block;
 }
-#total-box {
+div#total-box {
 	position: absolute;
 	bottom: 0;
 	width: 100%;
 	border-top: 1px solid black;
+	margin-bottom: 0.2em;
 }
-#total-box div, #total-box li {
+#total-box div {
 	padding: 0.4em 0 0.4em 0.3em;
 }
 #tab .price {
@@ -99,18 +101,31 @@ ul {
 	right: 0;
 	margin-right: 0.4em;
 }
-#total-box div:last-child {
+#tab .price input {
+	width: 4em;
+	font-size: 16px;
+	border: 1px solid #dadada;
+	background: #fdfdfd;
+	padding-left: 0.2em;
+}
+#total-box div:nth-child(3) {
 	border-top: 1px dashed black;
 }
-#checkout {
+button#checkout {
 	margin: 0.5em auto;
-	width: 100%;
+	width: 95%;
 	padding: 0.4em 0;
 	display: block;
 }
 #history {
 	clear: both;
 }
+#history ul .item {
+	cursor: default;
+}
+#history ul .item:hover {
+	box-shadow: none;
+}
 details {
-	display: none;
+	display: block;
 }

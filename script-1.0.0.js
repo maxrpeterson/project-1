@@ -2,6 +2,7 @@ var subtotalField = document.querySelector("#subtotal-field");
 var taxField = document.querySelector("#tax-field");
 var totalField = document.querySelector("#total-field");
 var tabField = document.querySelector("#tab ul")
+var orderHistory = document.querySelector("#history div ul")
 
 
 function Menu(items) {
@@ -22,21 +23,28 @@ function Menu(items) {
 Menu.prototype.createTab = function() {
 	this.orders.push(new Tab());
 	this.currentTab = this.orders[(this.orders.length - 1)];
+	this.currentTab.render();
 };
 Menu.prototype.addToTab = function(item) {
 	// this.currentTab.addItem(this.items[(this.items.indexOf(item))]);
 	this.currentTab.addItem(item);
 };
-
-var menu = new Menu(document.querySelectorAll("#menu .item"));
-
-for (var i = 0; i < menu.items.length; i++) {
-	menu.items[i].addEventListener("click", function(event) {
-		menu.addToTab(event.currentTarget);
-	});
+Menu.prototype.checkout = function() {
+	var order = document.createElement("li");
+	order.textContent = "Order #" + this.orders.length + ": " + this.currentTab.items.length + " items";
+	var orderDetails = document.createElement("details");
+	for (var i = this.currentTab.items.length - 1; i >= 0; i--) {
+		tabField.children[0].removeEventListener("click", function(event) {
+			if (event.target.nodeName !== "INPUT") {
+				menu.currentTab.removeItem(this);
+			}
+		});
+		orderDetails.appendChild(tabField.children[0]);
+	}
+	order.appendChild(orderDetails);
+	orderHistory.appendChild(order);
+	this.createTab();
 };
-
-menu.createTab();
 
 
 
@@ -49,7 +57,7 @@ function Tab() {
 Tab.prototype.calcTotal = function() {
 	this.subtotal = 0;
 	for (var i = 0; i < this.items.length; i++) {
-		this.subtotal += this.items[i].price;
+		this.subtotal += parseFloat(this.items[i].html.querySelector("input").value);
 	}
 	this.tax = this.subtotal * 0.08875;
 	this.total = this.subtotal + this.tax;
@@ -69,6 +77,7 @@ Tab.prototype.render = function() {
 		}
 	}
 	this.calcTotal();
+	document.querySelector("#tab div:first-child").scrollTop = 99999999;
 };
 Tab.prototype.removeItem = function(item) {
 	var itemHtml = item;
@@ -89,6 +98,29 @@ function TabItem(item, tabItemIndex) {
 	this.html.addEventListener("click", function(event) {
 		if (event.target.nodeName !== "INPUT") {
 			menu.currentTab.removeItem(this);
-		} // else if (event.target.nodeName === "P")
+		}
+	});
+	this.html.querySelector(".price input").addEventListener("keyup", function(event) {
+		if (event.which === 13) {
+			if (typeof parseFloat(event.target.value) === "number") {
+				menu.currentTab.render();
+				event.target.value = parseFloat(event.target.value).toFixed(2);
+				event.target.blur();
+			}
+		}
 	});
 };
+
+var menu = new Menu(document.querySelectorAll("#menu .item"));
+
+
+for (var i = 0; i < menu.items.length; i++) {
+	menu.items[i].addEventListener("click", function(event) {
+		menu.addToTab(event.currentTarget);
+	});
+};
+
+menu.createTab();
+document.querySelector("button#checkout").addEventListener("click", function(event) {
+	menu.checkout();
+});

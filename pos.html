@@ -4,7 +4,7 @@
 	<meta charset="utf-8">
 	<title>MaxCorp POS</title>
 	<link rel="stylesheet" type="text/css" href="style.css">
-	<script type="text/javascript" src="../../../jQuery/2.x/jquery-2.1.4.js"></script>
+	<script type="text/javascript" src="../../jQuery/2.x/jquery-2.1.4.js"></script>
 </head>
 <body>
 	<header>
@@ -63,11 +63,15 @@
 				<div>Subtotal: <output class="price">$<span id="subtotal-field">0.00</span></output></div>
 				<div>Tax: <output class="price">$<span id="tax-field">0.00</span></output></div>
 				<div>Total: <output class="price">$<span id="total-field">0.00</span></output></div>
+				<button id="checkout">Checkout</button>
 			</div>
-			<button id="checkout">Checkout</button>
 		</section>
 		<section id="history">
 			<h2>History</h2>
+			<div>
+				<ul>
+				</ul>
+			</div>
 		</section>
 	</div>
 <!-- 	<script type="text/javascript" src="script-0.2.0.js"></script> -->
