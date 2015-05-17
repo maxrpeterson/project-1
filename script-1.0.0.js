@@ -1,8 +1,8 @@
 var subtotalField = document.querySelector("#subtotal-field");
 var taxField = document.querySelector("#tax-field");
 var totalField = document.querySelector("#total-field");
-var tabField = document.querySelector("#tab ul")
-var orderHistory = document.querySelector("#history div ul")
+var tabField = document.querySelector("#tab ul");
+var orderHistory = document.querySelector("#history div ul");
 
 
 function Menu(items) {
@@ -16,9 +16,9 @@ function Menu(items) {
 		}
 		this.items.push(items[i]);
 	}
-	this.currentTab;
+	this.currentTab = null;
 	this.orders = [];
-};
+}
 Menu.prototype.createTab = function() {
 	this.orders.push(new Tab());
 	this.currentTab = this.orders[(this.orders.length - 1)];
@@ -27,17 +27,26 @@ Menu.prototype.createTab = function() {
 Menu.prototype.addToTab = function(item) {
 	this.currentTab.addItem(item);
 };
+var toggleHidden = function(event) {
+	event.currentTarget.children[0].classList.toggle("hidden");
+};
 Menu.prototype.checkout = function() {
 	var order = document.createElement("li");
 	order.textContent = "Order #" + this.orders.length + ": " + this.currentTab.items.length + " items";
-	var orderDetails = document.createElement("details");
+	var orderDetails = document.createElement("div");
+	orderDetails.classList.add("hidden", "details");
 	for (var i = this.currentTab.items.length - 1; i >= 0; i--) {
-		tabField.children[0].removeEventListener("click", removeTabItem);
-		tabField.children[0].querySelector(".price input").removeEventListener("keyup", updateItemPrice);
-		orderDetails.appendChild(tabField.children[0]);
+		var thisHTML = tabField.children[0];
+		thisHTML.removeEventListener("click", removeTabItem);
+		thisHTML.querySelector(".price input").removeEventListener("keyup", updateItemPrice);
+		console.log(thisHTML.querySelector(".price").value);
+		thisHTML.querySelector(".price").textContent += thisHTML.querySelector(".price input").value;
+		console.log(thisHTML);
+		orderDetails.appendChild(thisHTML);
 	}
 	order.appendChild(orderDetails);
 	orderHistory.appendChild(order);
+	order.addEventListener("click", toggleHidden)
 	this.createTab();
 };
 
@@ -48,11 +57,11 @@ function Tab() {
 	this.subtotal = 0;
 	this.tax = 0;
 	this.total = 0;
-};
+}
 Tab.prototype.calcTotal = function() {
 	this.subtotal = 0;
 	for (var i = 0; i < this.items.length; i++) {
-		this.subtotal += parseFloat(this.items[i].html.querySelector("input").value);
+		this.subtotal += parseFloat(this.items[i].price);
 	}
 	this.tax = this.subtotal * 0.08875;
 	this.total = this.subtotal + this.tax;
@@ -68,7 +77,7 @@ Tab.prototype.addItem = function(item) {
 Tab.prototype.render = function() {
 	for (var i = 0; i < this.items.length; i++) {
 		if (this.items[i].html.parentNode !== tabField) {
-			tabField.appendChild(this.items[i].html)
+			tabField.appendChild(this.items[i].html);
 		}
 	}
 	this.calcTotal();
@@ -91,14 +100,12 @@ var removeTabItem = function(event) {
 var updateItemPrice = function(event) {
 	if (event.which === 13) {
 		var newPrice = parseFloat(event.target.value);
-		console.log(newPrice);
-		console.log(this.parentNode.parentNode);
-		console.log(menu.currentTab.items[this.parentNode.parentNode.tabItemIndex].price);
 		if (Number.isNaN(newPrice)) {
-			event.target.value = parseFloat(menu.currentTab.items[this.parentNode.parentNode.tabItemIndex].price).toFixed(2)
+			event.target.value = parseFloat(menu.currentTab.items[this.parentNode.parentNode.tabItemIndex].price).toFixed(2);
 			menu.currentTab.render();
 			event.target.blur();
 		} else if (typeof parseFloat(event.target.value) === "number") {
+			menu.currentTab.items[this.parentNode.parentNode.tabItemIndex].price = parseFloat(event.target.value);
 			menu.currentTab.render();
 			event.target.value = parseFloat(event.target.value).toFixed(2);
 			event.target.blur();
@@ -114,18 +121,19 @@ function TabItem(item, tabItemIndex) {
 	this.html.querySelector(".price").insertAdjacentHTML("afterbegin","$<input type='text' value=" + this.price.toFixed(2) + ">");
 	this.html.addEventListener("click", removeTabItem);
 	this.html.querySelector(".price input").addEventListener("keyup", updateItemPrice);
-};
+}
 
 var menu = new Menu(document.querySelectorAll("#menu .item"));
 
-
-for (var i = 0; i < menu.items.length; i++) {
-	menu.items[i].addEventListener("click", function(event) {
-		menu.addToTab(event.currentTarget);
-	});
+var addToTabListener = function(event) {
+	menu.addToTab(event.currentTarget);
 };
 
+for (var i = 0; i < menu.items.length; i++) {
+	menu.items[i].addEventListener("click", addToTabListener);
+}
+
 menu.createTab();
-document.querySelector("button#checkout").addEventListener("click", function(event) {
+document.querySelector("button#checkout").addEventListener("click", function() {
 	menu.checkout();
 });
