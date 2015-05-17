@@ -31,23 +31,23 @@ var toggleHidden = function(event) {
 	event.currentTarget.children[0].classList.toggle("hidden");
 };
 Menu.prototype.checkout = function() {
-	var order = document.createElement("li");
-	order.textContent = "Order #" + this.orders.length + ": " + this.currentTab.items.length + " items";
-	var orderDetails = document.createElement("div");
-	orderDetails.classList.add("hidden", "details");
-	for (var i = this.currentTab.items.length - 1; i >= 0; i--) {
-		var thisHTML = tabField.children[0];
-		thisHTML.removeEventListener("click", removeTabItem);
-		thisHTML.querySelector(".price input").removeEventListener("keyup", updateItemPrice);
-		console.log(thisHTML.querySelector(".price").value);
-		thisHTML.querySelector(".price").textContent += thisHTML.querySelector(".price input").value;
-		console.log(thisHTML);
-		orderDetails.appendChild(thisHTML);
+	if (tabField.hasChildNodes()) {
+		var order = document.createElement("li");
+		order.textContent = "Order #" + this.orders.length + ": " + this.currentTab.items.length + " items";
+		var orderDetails = document.createElement("div");
+		orderDetails.classList.add("hidden", "details");
+		for (var i = this.currentTab.items.length - 1; i >= 0; i--) {
+			var thisHTML = tabField.children[0];
+			thisHTML.removeEventListener("click", removeTabItem);
+			thisHTML.querySelector(".price input").removeEventListener("keyup", updateItemPrice);
+			thisHTML.querySelector(".price").textContent += thisHTML.querySelector(".price input").value;
+			orderDetails.appendChild(thisHTML);
+		}
+		order.appendChild(orderDetails);
+		orderHistory.appendChild(order);
+		order.addEventListener("click", toggleHidden)
+		this.createTab();
 	}
-	order.appendChild(orderDetails);
-	orderHistory.appendChild(order);
-	order.addEventListener("click", toggleHidden)
-	this.createTab();
 };
 
 

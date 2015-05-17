@@ -43,7 +43,7 @@ div {
 .item:active, #menu .item:active, #history div ul li:active {
 	background: #c0c0c0;
 }
-.item:hover, #menu .item:hover, #history div ul li:hover {
+#tab .item:hover, #menu .item:hover {
 	box-shadow: 0 0 8px #8a8a8a;
 }
 #menu .item p {
@@ -123,21 +123,26 @@ button#checkout {
 #history {
 	clear: both;
 }
+#history ul li {
+	margin: 1em 0;
+	padding: 0.4em 0;
+}
 #history .details .item {
 	cursor: default;
 	float: none;
 	width: 100%;
-	margin: 1em 0;
+	margin: 0.4em 0;
 }
 #history .item p {
 	margin: 0.2em 0;
 }
-#history .details .item:hover {
-	box-shadow: none;
-	background: white;
+#history ul li:hover {
+	background: #eaeaea;
 }
-.details {
-	display: block;
+div.details {
+	box-shadow: 0 0 6px #9d9d9d inset;
+	background: #dadada;
+	padding: 1px 0;
 }
 .hidden {
 	display: none;
