@@ -15,7 +15,6 @@ function Menu(items) {
 				items[i].price = parseFloat(htmlPrice);
 		}
 		this.items.push(items[i]);
-		// this.items.push(new MenuItem(items[i]));
 	}
 	this.currentTab;
 	this.orders = [];
@@ -26,7 +25,6 @@ Menu.prototype.createTab = function() {
 	this.currentTab.render();
 };
 Menu.prototype.addToTab = function(item) {
-	// this.currentTab.addItem(this.items[(this.items.indexOf(item))]);
 	this.currentTab.addItem(item);
 };
 Menu.prototype.checkout = function() {
@@ -34,11 +32,8 @@ Menu.prototype.checkout = function() {
 	order.textContent = "Order #" + this.orders.length + ": " + this.currentTab.items.length + " items";
 	var orderDetails = document.createElement("details");
 	for (var i = this.currentTab.items.length - 1; i >= 0; i--) {
-		tabField.children[0].removeEventListener("click", function(event) {
-			if (event.target.nodeName !== "INPUT") {
-				menu.currentTab.removeItem(this);
-			}
-		});
+		tabField.children[0].removeEventListener("click", removeTabItem);
+		tabField.children[0].querySelector(".price input").removeEventListener("keyup", updateItemPrice);
 		orderDetails.appendChild(tabField.children[0]);
 	}
 	order.appendChild(orderDetails);
@@ -88,6 +83,28 @@ Tab.prototype.removeItem = function(item) {
 	}
 	this.render();
 };
+var removeTabItem = function(event) {
+	if (event.target.nodeName !== "INPUT") {
+			menu.currentTab.removeItem(this);
+	}
+};
+var updateItemPrice = function(event) {
+	if (event.which === 13) {
+		var newPrice = parseFloat(event.target.value);
+		console.log(newPrice);
+		console.log(this.parentNode.parentNode);
+		console.log(menu.currentTab.items[this.parentNode.parentNode.tabItemIndex].price);
+		if (Number.isNaN(newPrice)) {
+			event.target.value = parseFloat(menu.currentTab.items[this.parentNode.parentNode.tabItemIndex].price).toFixed(2)
+			menu.currentTab.render();
+			event.target.blur();
+		} else if (typeof parseFloat(event.target.value) === "number") {
+			menu.currentTab.render();
+			event.target.value = parseFloat(event.target.value).toFixed(2);
+			event.target.blur();
+		}
+	}
+};
 
 function TabItem(item, tabItemIndex) {
 	this.price = item.price;
@@ -95,20 +112,8 @@ function TabItem(item, tabItemIndex) {
 	this.html.tabItemIndex = tabItemIndex;
 	this.html.querySelector(".price").textContent = "";
 	this.html.querySelector(".price").insertAdjacentHTML("afterbegin","$<input type='text' value=" + this.price.toFixed(2) + ">");
-	this.html.addEventListener("click", function(event) {
-		if (event.target.nodeName !== "INPUT") {
-			menu.currentTab.removeItem(this);
-		}
-	});
-	this.html.querySelector(".price input").addEventListener("keyup", function(event) {
-		if (event.which === 13) {
-			if (typeof parseFloat(event.target.value) === "number") {
-				menu.currentTab.render();
-				event.target.value = parseFloat(event.target.value).toFixed(2);
-				event.target.blur();
-			}
-		}
-	});
+	this.html.addEventListener("click", removeTabItem);
+	this.html.querySelector(".price input").addEventListener("keyup", updateItemPrice);
 };
 
 var menu = new Menu(document.querySelectorAll("#menu .item"));
