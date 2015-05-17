@@ -45,7 +45,7 @@ Menu.prototype.checkout = function() {
 		}
 		order.appendChild(orderDetails);
 		orderHistory.appendChild(order);
-		order.addEventListener("click", toggleHidden)
+		order.addEventListener("click", toggleHidden);
 		this.createTab();
 	}
 };
