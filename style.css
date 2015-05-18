@@ -7,6 +7,11 @@ body {
 	font-family: sans-serif;
 	background-size: 100% 150%;
 }
+/*header {
+	background: #e0e0e0;
+	padding: 1em;
+	margin-bottom: 0.5em;
+}*/
 .container {
 	max-width: 1200px;
 	min-width: 960px;
