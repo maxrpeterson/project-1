@@ -5,6 +5,7 @@
 	<title>MaxCorp POS</title>
 	<link rel="stylesheet" type="text/css" href="style.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+	<script type="text/javascript" src="script-1.0.0.js"></script>
 </head>
 <body>
 	<header>
@@ -61,6 +62,7 @@
 			<div id="total-box">
 				<div>Subtotal: <output class="price">$<span id="subtotal-field">0.00</span></output></div>
 				<div>Tax: <output class="price">$<span id="tax-field">0.00</span></output></div>
+				<div>Tip: <button>10%</button><button>15%</button><button>20%</button> <output class="price">$<span id="tip-field">0.00</span></output></div>
 				<div>Total: <output class="price">$<span id="total-field">0.00</span></output></div>
 				<button id="checkout">Checkout</button>
 			</div>
@@ -73,6 +75,5 @@
 			</div>
 		</section>
 	</div>
-	<script type="text/javascript" src="script-1.0.0.js"></script>
 </body>
 </html>

@@ -74,7 +74,7 @@ section#tab {
 	padding: 0.5em 0 0 0;
 	overflow: auto;
 	box-shadow: 0 0 6px #aaaaaa inset;
-	height: 390px;
+	height: 375px;
 	border-bottom: 1px solid black;
 }
 ul {
@@ -116,7 +116,7 @@ div#total-box {
 	background: #fdfdfd;
 	padding-left: 0.2em;
 }
-#total-box div:nth-child(3) {
+#total-box div:nth-child(3), #total-box div:nth-child(4)  {
 	border-top: 1px dashed black;
 }
 button#checkout {
